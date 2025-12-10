@@ -1,9 +1,21 @@
 package com.utsa.kpstore.playstore_desktop;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Launcher {
+public class Launcher extends Application {
     public static void main(String[] args) {
-        Application.launch(HelloApplication.class, args);
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-layout.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("KUET PlayStore - Sign In");
+        stage.setScene(scene);
+        stage.show();
     }
 }

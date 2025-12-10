@@ -12,5 +12,7 @@ module com.utsa.kpstore.playstore_desktop {
     requires com.almasb.fxgl.all;
 
     opens com.utsa.kpstore.playstore_desktop to javafx.fxml;
+    opens com.utsa.kpstore.playstore_desktop.controllers to javafx.fxml;
     exports com.utsa.kpstore.playstore_desktop;
+    exports com.utsa.kpstore.playstore_desktop.controllers;
 }

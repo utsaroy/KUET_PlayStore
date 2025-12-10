@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utsa.kpstore.playstore_desktop.controllers.AppDetailViewController">
+    
+    <content>
+        <VBox spacing="30" styleClass="padding-medium">
+
+            <HBox alignment="CENTER" spacing="30" styleClass="detail-header">
+                <children>
+               <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/logo.png" />
+                  </image>
+                  <HBox.margin>
+                     <Insets left="20.0" />
+                  </HBox.margin>
+               </ImageView>
+
+                    <VBox spacing="15" HBox.hgrow="ALWAYS">
+                        <children>
+                            <VBox spacing="8">
+                                <Text fill="#0a4589" styleClass="detail-title" text="GPA Calculator">
+                           <font>
+                              <Font name="System Bold" size="31.0" />
+                           </font></Text>
+                                <Text fill="#1f4971" styleClass="detail-developer" text="Utsa Roy (CSE'22)">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Text>
+                                <HBox spacing="10">
+                                    <Label styleClass="tag" text="Educational" />
+                                    <Label styleClass="tag" text="Productivity" />
+                                    <Label styleClass="badge success" text="Free" />
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                                </HBox>
+                            </VBox>
+                            
+                            <!-- Rating & Stats -->
+                            <HBox alignment="CENTER_LEFT" spacing="40">
+                                <VBox alignment="CENTER" spacing="8" styleClass="stat-card">
+                                    <children>
+                                         <Text fill="#082984" styleClass="stat-value" text="4.5">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                                        <Text text="245 REVIEWS" />
+                                    </children>
+                                </VBox>
+                        <Separator orientation="VERTICAL" />
+                                
+                                <VBox alignment="CENTER" spacing="8" styleClass="stat-card">
+                                    <children>
+                                         <Text fill="#082984" styleClass="stat-value" text="1.2K">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                                        <Text styleClass="stat-label" text="DOWNLOADS" />
+                                    </children>
+                                </VBox>
+                        <Separator orientation="VERTICAL" />
+                                
+                                <VBox alignment="CENTER" spacing="8" styleClass="stat-card">
+                                    <children>
+                                         <Text fill="#082984" style="-fx-font-size: 18px;" text="Dec 5" />
+                                        <Text styleClass="stat-label" text="UPDATED" />
+                                    </children>
+                                </VBox>
+                            </HBox>
+                        </children>
+                  <HBox.margin>
+                     <Insets top="10.0" />
+                  </HBox.margin>
+                    </VBox>
+                </children>
+            </HBox>
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <Button styleClass="download-button" stylesheets="@styles/styles.css" text="Download" />
+                    <Button styleClass="secondary-button" text="Add to Wishlist" textFill="WHITE">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.18850000202655792" green="0.4866009056568146" blue="0.6499999761581421" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+                    <Button styleClass="secondary-button" text="Share" textFill="WHITE">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.15950000286102295" green="0.4236326217651367" blue="0.550000011920929" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+            <VBox.margin>
+               <Insets bottom="20.0" left="20.0" top="20.0" />
+            </VBox.margin>
+                </HBox>
+              
+                    <ScrollPane fitToHeight="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                  <content>
+                      <HBox spacing="20">
+                  <ImageView fitHeight="250.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/ss_welcome.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="250.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/ss_welcome.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="250.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/ss_welcome.png" />
+                     </image>
+                  </ImageView>
+                      </HBox>
+                  </content>
+            <VBox.margin>
+               <Insets left="10.0" right="10.0" />
+            </VBox.margin>
+              </ScrollPane>
+
+            <VBox spacing="15" style="-fx-background-color: -fx-surface; -fx-padding: 25; -fx-background-radius: 12;">
+                <children>
+                    <Text fill="#082984" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="About This App" />
+                    
+                    <Text styleClass="description-text" text="Study Buddy Pro is your ultimate companion for academic success at KUET. Whether you're managing your class schedule, organizing notes, or tracking your progress, this app has everything you need to stay on top of your studies.&#10;&#10;Key Features:&#10;• Smart Study Planner - Create and manage your study schedule efficiently&#10;• Note Taking - Organize your class notes with rich text formatting&#10;• Progress Tracking - Monitor your academic performance over time&#10;• Reminder System - Never miss an assignment or exam deadline&#10;• Resource Library - Store and access your study materials in one place&#10;• Dark Mode - Study comfortably at any time of day&#10;&#10;Built specifically for KUET students, Study Buddy Pro understands your academic needs and helps you achieve your goals." />
+                </children>
+            </VBox>
+
+            <VBox spacing="15" style="-fx-background-color: -fx-surface; -fx-padding: 25; -fx-background-radius: 12;">
+                <children>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Text fill="#082984" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="What's New" />
+                        <Label style="-fx-background-color: #6200EE;" styleClass="badge" text="v2.1.0" textFill="WHITE" />
+                    </HBox>
+                    
+                                      <VBox spacing="10">
+                        <HBox alignment="TOP_LEFT" spacing="10">
+                            <Text style="-fx-fill: #00C853; -fx-font-size: 16px;" text="✓" />
+                            <Text styleClass="description-text" text="Added new Dark Mode theme for better night-time studying" />
+                        </HBox>
+                        <HBox alignment="TOP_LEFT" spacing="10">
+                            <Text style="-fx-fill: #00C853; -fx-font-size: 16px;" text="✓" />
+                            <Text styleClass="description-text" text="Improved performance and reduced memory usage by 30%" />
+                        </HBox>
+                        <HBox alignment="TOP_LEFT" spacing="10">
+                            <Text style="-fx-fill: #00C853; -fx-font-size: 16px;" text="✓" />
+                            <Text styleClass="description-text" text="Fixed bug where reminders weren't triggering properly" />
+                        </HBox>
+                        <HBox alignment="TOP_LEFT" spacing="10">
+                            <Text style="-fx-fill: #00C853; -fx-font-size: 16px;" text="✓" />
+                            <Text styleClass="description-text" text="Added support for exporting notes to PDF format" />
+                        </HBox>
+                    </VBox>
+                </children>
+            </VBox>
+
+            <VBox spacing="15" style="-fx-background-color: -fx-surface; -fx-padding: 25; -fx-background-radius: 12;">
+                <children>
+                    <Text fill="#082984" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="About the Developer" />
+                    
+                    <HBox alignment="TOP_LEFT" spacing="20">
+                        <StackPane maxHeight="50.0" maxWidth="50.0" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #6200EE, #3700B3); -fx-background-radius: 40;">
+                            <Text style="-fx-font-size: 40px;" text="👤" />
+                        </StackPane>
+                        
+                        <VBox spacing="10" HBox.hgrow="ALWAYS">
+                            <Text fill="#980eed" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Utsa Roy" />
+                            <Text styleClass="description-text" text="Computer Science &amp; Engineering, Batch 2022" />
+                            <Text styleClass="description-text" text="Passionate about creating tools that help students succeed. I've developed several educational apps and utilities for the KUET community." />
+                            
+                            <HBox spacing="15">
+                                <Button style="-fx-padding: 8 20; -fx-font-size: 12px;" styleClass="secondary-button" text="View Profile" textFill="WHITE" />
+                                <Button style="-fx-padding: 8 20; -fx-font-size: 12px;" styleClass="secondary-button" text="More Apps" textFill="WHITE" />
+                                <Button style="-fx-padding: 8 20; -fx-font-size: 12px;" styleClass="secondary-button" text="Contact" textFill="WHITE" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </children>
+            </VBox>
+
+            <VBox alignment="TOP_CENTER" spacing="20" style="-fx-background-color: -fx-surface; -fx-padding: 25; -fx-background-radius: 12;">
+                <children>
+                    <HBox alignment="CENTER_LEFT">
+                        <Text fill="#082984" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="User Reviews" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button style="-fx-padding: 8 20; -fx-font-size: 12px;" styleClass="primary-button" text="Write a Review" />
+                    </HBox>
+                    
+                    <!-- Rating Summary -->
+                    <HBox spacing="40" style="-fx-padding: 15; -fx-background-color: -fx-background; -fx-background-radius: 8;">
+                        <VBox alignment="CENTER" spacing="5">
+                            <Text style="-fx-font-size: 48px; -fx-font-weight: bold; -fx-fill: #FFA000;" text="4.5" />
+                            <Text style="-fx-font-size: 13px; -fx-fill: -fx-text-secondary;" text="245 reviews" />
+                        </VBox>
+                        
+                        <VBox spacing="8" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Text style="-fx-font-size: 13px; -fx-min-width: 15px;" text="5" />
+                                <ProgressBar prefHeight="8" prefWidth="200" progress="0.7" style="-fx-accent: #FFA000;" />
+                                <Text style="-fx-font-size: 13px; -fx-fill: -fx-text-secondary;" text="172" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Text style="-fx-font-size: 13px; -fx-min-width: 15px;" text="4" />
+                                <ProgressBar prefHeight="8" prefWidth="200" progress="0.2" style="-fx-accent: #FFA000;" />
+                                <Text style="-fx-font-size: 13px; -fx-fill: -fx-text-secondary;" text="49" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Text style="-fx-font-size: 13px; -fx-min-width: 15px;" text="3" />
+                                <ProgressBar prefHeight="8" prefWidth="200" progress="0.08" style="-fx-accent: #FFA000;" />
+                                <Text style="-fx-font-size: 13px; -fx-fill: -fx-text-secondary;" text="20" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Text style="-fx-font-size: 13px; -fx-min-width: 15px;" text="2" />
+                                <ProgressBar prefHeight="8" prefWidth="200" progress="0.01" style="-fx-accent: #FFA000;" />
+                                <Text style="-fx-font-size: 13px; -fx-fill: -fx-text-secondary;" text="3" />
+                            </HBox>
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Text style="-fx-font-size: 13px; -fx-min-width: 15px;" text="1" />
+                                <ProgressBar prefHeight="8" prefWidth="200" progress="0.004" style="-fx-accent: #FFA000;" />
+                                <Text style="-fx-font-size: 13px; -fx-fill: -fx-text-secondary;" text="1" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                    
+                    <Separator />
+
+                    <VBox spacing="20">
+                        <VBox spacing="12" style="-fx-padding: 15; -fx-background-color: -fx-background; -fx-background-radius: 8;">
+                            <HBox alignment="CENTER_LEFT" spacing="15">
+                                <StackPane prefHeight="40" prefWidth="40" style="-fx-background-color: #6200EE; -fx-background-radius: 20;">
+                                    <Text style="-fx-fill: white; -fx-font-weight: bold;" text="SK" />
+                                </StackPane>
+                                <VBox spacing="3">
+                                    <Text fill="#082984" style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Sarah Khan" />
+                                    <Text style="-fx-font-size: 12px; -fx-fill: -fx-text-secondary;" text="CSE'23 • 2 weeks ago" />
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Text style="-fx-font-size: 14px;" text="⭐⭐⭐⭐⭐" />
+                            </HBox>
+                            <Text styleClass="description-text" text="Absolutely love this app! It has made organizing my studies so much easier. The reminder feature is a lifesaver, and I never miss any deadlines now. Highly recommended for all KUET students!" />
+                            <Button style="-fx-padding: 6 12; -fx-font-size: 11px;" styleClass="secondary-button" text="👍 Helpful (24)" />
+                        </VBox>
+                        
+                        <!-- Review 2 -->
+                        <VBox spacing="12" style="-fx-padding: 15; -fx-background-color: -fx-background; -fx-background-radius: 8;">
+                            <HBox alignment="CENTER_LEFT" spacing="15">
+                                <StackPane prefHeight="40" prefWidth="40" style="-fx-background-color: #03DAC6; -fx-background-radius: 20;">
+                                    <Text style="-fx-fill: white; -fx-font-weight: bold;" text="TA" />
+                                </StackPane>
+                                <VBox spacing="3">
+                                    <Text fill="#082984" style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Tanvir Ahmed" />
+                                    <Text style="-fx-font-size: 12px; -fx-fill: -fx-text-secondary;" text="EEE'22 • 1 month ago" />
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Text style="-fx-font-size: 14px;" text="⭐⭐⭐⭐" />
+                            </HBox>
+                            <Text styleClass="description-text" text="Great app overall! The interface is clean and easy to use. Only wish it had cloud sync across devices. Still, it's been very helpful for managing my coursework." />
+                            <Button style="-fx-padding: 6 12; -fx-font-size: 11px;" styleClass="secondary-button" text="👍 Helpful (12)" />
+                        </VBox>
+
+                        <VBox spacing="12" style="-fx-padding: 15; -fx-background-color: -fx-background; -fx-background-radius: 8;">
+                            <HBox alignment="CENTER_LEFT" spacing="15">
+                                <StackPane prefHeight="40" prefWidth="40" style="-fx-background-color: #FF6F00; -fx-background-radius: 20;">
+                                    <Text style="-fx-fill: white; -fx-font-weight: bold;" text="NJ" />
+                                </StackPane>
+                                <VBox spacing="3">
+                                    <Text fill="#082984" style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Nusrat Jahan" />
+                                    <Text style="-fx-font-size: 12px; -fx-fill: -fx-text-secondary;" text="ME'21 • 3 months ago" />
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Text style="-fx-font-size: 14px;" text="⭐⭐⭐⭐⭐" />
+                            </HBox>
+                            <Text styleClass="description-text" text="This app is a game-changer! As a final year student, keeping track of everything can be overwhelming, but Study Buddy Pro makes it manageable. The progress tracking feature helps me stay motivated. Kudos to the developer!" />
+                            <Button style="-fx-padding: 6 12; -fx-font-size: 11px;" styleClass="secondary-button" text="👍 Helpful (31)" />
+                        </VBox>
+                    </VBox>
+                    
+                    <Button alignment="CENTER" style="-fx-padding: 10 24; -fx-font-size: 13px;" styleClass="primary-button" text="Load More Reviews" />
+                </children>
+            </VBox>
+            
+            <VBox.margin>
+                <Insets bottom="20" />
+            </VBox.margin>
+        </VBox>
+    </content>
+</ScrollPane>

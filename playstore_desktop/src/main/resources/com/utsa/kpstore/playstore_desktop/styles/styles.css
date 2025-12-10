@@ -1,0 +1,201 @@
+.root {
+    /* Primary Colors */
+    -fx-primary: #6200EE;
+    -fx-primary-dark: #3700B3;
+    -fx-primary-light: #BB86FC;
+
+    /* Accent Colors */
+    -fx-accent: #03DAC6;
+    -fx-accent-dark: #018786;
+
+    /* Background Colors */
+    -fx-background: #FAFAFA;
+    -fx-background-dark: #121212;
+    -fx-surface: #FFFFFF;
+    -fx-surface-dark: #1E1E1E;
+
+    /* Text Colors */
+    -fx-text-primary: #212121;
+    -fx-text-secondary: #757575;
+    -fx-text-disabled: #BDBDBD;
+
+    /* Shadows */
+    -fx-shadow-1: rgba(0, 0, 0, 0.12);
+    -fx-shadow-2: rgba(0, 0, 0, 0.16);
+    -fx-shadow-3: rgba(0, 0, 0, 0.24);
+}
+
+#mainContainer {
+    -fx-background-color: -fx-background;
+}
+
+#sidebar {
+    -fx-background-color: -fx-surface;
+    -fx-border-color: #E0E0E0;
+    -fx-border-width: 0 1 0 0;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-1, 4, 0, 2, 0);
+}
+
+#contentArea {
+    -fx-background-color: -fx-background;
+    -fx-padding: 20;
+}
+
+#topBar {
+    -fx-background-color: linear-gradient(to bottom right, #667eea, #764ba2);
+    -fx-padding: 15 20;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-2, 6, 0, 0, 2);
+}
+
+#appTitle {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+#searchBox {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 20;
+    -fx-padding: 8 16;
+    -fx-font-size: 14px;
+}
+
+#searchBox:focused {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 2);
+}
+
+/*Navigation Buttons*/
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 15px;
+    -fx-padding: 15 20;
+    -fx-cursor: hand;
+    -fx-background-radius: 8;
+    -fx-alignment: center-left;
+}
+
+.nav-button:hover {
+    -fx-background-color: rgba(98, 0, 238, 0.08);
+}
+
+.nav-button:pressed {
+    -fx-background-color: rgba(98, 0, 238, 0.12);
+}
+
+.nav-button.active {
+    -fx-background-color: rgba(98, 0, 238, 0.12);
+    -fx-text-fill: -fx-primary;
+    -fx-font-weight: bold;
+}
+
+.nav-icon {
+    -fx-fill: -fx-text-secondary;
+    -fx-icon-size: 24px;
+}
+
+.nav-button.active .nav-icon {
+    -fx-fill: -fx-primary;
+}
+
+/*App Cards*/
+
+.app-card {
+    -fx-background-color: -fx-surface;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-1, 8, 0, 0, 2);
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.app-card:hover {
+    -fx-effect: dropshadow(gaussian, -fx-shadow-2, 12, 0, 0, 4);
+    -fx-translate-y: -2;
+}
+
+.app-card-image {
+    -fx-background-radius: 12 12 0 0;
+}
+
+.app-card-content {
+    -fx-padding: 16;
+}
+
+/*Responsive Grid*/
+
+.app-grid {
+    -fx-hgap: 20;
+    -fx-vgap: 20;
+    -fx-padding: 10;
+}
+
+.category-grid {
+    -fx-hgap: 24;
+    -fx-vgap: 24;
+    -fx-padding: 10;
+}
+
+
+.primary-button {
+    -fx-background-color:  linear-gradient(to bottom right, #47a4e6, #0f12b5);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24;
+    -fx-background-radius: 28;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-2, 8, 0, 0, 2);
+}
+
+.primary-button:hover {
+    -fx-background-color: -fx-primary-dark;
+    -fx-effect: dropshadow(gaussian, -fx-shadow-3, 12, 0, 0, 4);
+}
+
+.primary-button:pressed {
+    -fx-background-color: -fx-primary-dark;
+    -fx-translate-y: 1;
+}
+
+.secondary-button {
+    -fx-background-color: #6ac4d6;
+    -fx-text-fill: -fx-primary;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24;
+    -fx-background-radius: 28;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #6a99d6;
+}
+
+.skip_button{
+    -fx-background-color:  rgba(255, 255, 255, 0.2);
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 20;
+    -fx-cursor: hand;
+    -fx-padding:  10 25;
+    -fx-border-color:  rgba(255, 255, 255, 0.3);
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+}
+
+.download-button {
+    -fx-background-color: linear-gradient(to bottom right, #2fbd51, #e8c847);
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 32;
+    -fx-background-radius: 30;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 200, 83, 0.4), 8, 0, 0, 2);
+}
