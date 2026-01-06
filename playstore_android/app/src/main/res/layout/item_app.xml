@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
+    app:cardCornerRadius="42dp"
     app:cardElevation="4dp">
 
     <LinearLayout
@@ -38,6 +38,15 @@
                 android:textColor="#333333"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/appCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Category"
+                android:textColor="#999999"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/appTitle"

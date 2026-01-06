@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.KUETPlayStore" parent="Base.Theme.KUETPlayStore" />
+    <style name="Theme.KUETPlayStore.ActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar"/>
 </resources>

@@ -4,9 +4,12 @@
         android:title="Home"
         android:icon="@drawable/icon_home" />
     <item android:id="@+id/nav_favourite"
-        android:title="Favourite"
+        android:title="Favourites"
         android:icon="@drawable/icon_fav" />
-    <item android:id="@+id/nav_profile"
-        android:title="Profile"
-        android:icon="@drawable/icon_user" />
+    <item android:id="@+id/search"
+        android:icon="@drawable/icon_search"
+        android:title="search"/>
+    <item android:id="@+id/downloads"
+        android:title="Downloads"
+        android:icon="@drawable/icon_download" />
 </menu>

@@ -55,7 +55,7 @@ public class SignupActivity extends AppCompatActivity {
                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                     if(firebaseUser != null){
                         String uid = firebaseUser.getUid();
-                        User user = new User(name, email);
+                        User user = new User(name, email, false, "none");
                         reference.child(uid).setValue(user).addOnCompleteListener(dbTask -> {
                             if(dbTask.isSuccessful()) {
                                 goToHome();

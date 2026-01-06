@@ -1,14 +1,15 @@
 package com.utsa.kpstore.models;
 
 public class ListApp {
-    private String name, title;
-    private int id;
+    private String name, title, category;
+    private String id;
 
     public ListApp(){}
-    public ListApp(String name, String title, int id) {
+    public ListApp(String name, String title, String id, String category) {
         this.name = name;
         this.title = title;
         this.id = id;
+        this.category = category;
     }
 
     public String getName() {
@@ -27,11 +28,19 @@ public class ListApp {
         this.title = title;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

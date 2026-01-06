@@ -60,7 +60,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void loadUserData() {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        
         if (currentUser != null) {
             emailText.setText(currentUser.getEmail());
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -68,6 +67,8 @@ public class ProfileActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         User user = snapshot.getValue(User.class);
+                        System.out.println("______________________");
+                        System.out.println(user);
                         if (user != null) {
                             currentUserData = user;
                             nameText.setText(user.getName());
@@ -89,9 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void updateDeveloperButton(User user) {
         if (user.isDeveloper()) {
-            // User is already a developer
-            developerButton.setText("Go to Developer Dashboard");
-            developerButton.setBackgroundTintList(getResources().getColorStateList(android.R.color.holo_blue_dark));
+            developerButton.setText("Go to Developer Profile");
             developerButton.setVisibility(View.VISIBLE);
         } else {
             // Check request status
@@ -101,18 +100,15 @@ public class ProfileActivity extends AppCompatActivity {
             switch (requestStatus) {
                 case "pending":
                     developerButton.setText("Request Pending");
-                    developerButton.setBackgroundTintList(getResources().getColorStateList(android.R.color.holo_orange_dark));
                     developerButton.setEnabled(false);
                     developerButton.setVisibility(View.VISIBLE);
                     break;
                 case "rejected":
                     developerButton.setText("Request Again");
-                    developerButton.setBackgroundTintList(getResources().getColorStateList(android.R.color.holo_red_dark));
                     developerButton.setVisibility(View.VISIBLE);
                     break;
-                default: // "none" or null
+                default:
                     developerButton.setText("Be a Developer");
-                    developerButton.setBackgroundTintList(getResources().getColorStateList(android.R.color.holo_green_dark));
                     developerButton.setVisibility(View.VISIBLE);
                     break;
             }
@@ -121,11 +117,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void handleDeveloperButtonClick() {
         if (currentUserData != null && currentUserData.isDeveloper()) {
-            // Navigate to Developer Dashboard
             Intent intent = new Intent(ProfileActivity.this, DeveloperProfile.class);
             startActivity(intent);
         } else {
-            // Navigate to Developer Request Form
             Intent intent = new Intent(ProfileActivity.this, BecomeAdmin.class);
             startActivity(intent);
         }

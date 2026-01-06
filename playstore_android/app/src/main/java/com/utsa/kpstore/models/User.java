@@ -2,17 +2,17 @@ package com.utsa.kpstore.models;
 
 public class User {
     String name, email;
-    boolean isDeveloper;
+    boolean developer;
     String developerRequestStatus; // "none", "pending", "approved", "rejected"
 
     public User(){
 
     }
-    public User(String name, String email) {
+    public User(String name, String email, boolean developer, String developerRequestStatus) {
         this.name = name;
         this.email = email;
-        this.isDeveloper = false;
-        this.developerRequestStatus = "none";
+        this.developer = developer;
+        this.developerRequestStatus = developerRequestStatus;
     }
 
     public String getName() {
@@ -32,11 +32,11 @@ public class User {
     }
 
     public boolean isDeveloper() {
-        return isDeveloper;
+        return developer;
     }
 
     public void setDeveloper(boolean developer) {
-        isDeveloper = developer;
+        this.developer = developer;
     }
 
     public String getDeveloperRequestStatus() {
@@ -45,5 +45,15 @@ public class User {
 
     public void setDeveloperRequestStatus(String developerRequestStatus) {
         this.developerRequestStatus = developerRequestStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", developer=" + developer +
+                ", developerRequestStatus='" + developerRequestStatus + '\'' +
+                '}';
     }
 }

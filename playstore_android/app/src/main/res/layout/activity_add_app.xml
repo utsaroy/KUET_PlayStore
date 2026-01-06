@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5"
     android:fillViewport="true"
+    android:layout_marginTop="20dp"
     tools:context=".AddAppActivity">
 
     <LinearLayout
@@ -43,12 +44,11 @@
                     android:id="@+id/appNameField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/input_bg"
-                    android:hint="e.g., My Awesome App"
                     android:inputType="text"
                     android:padding="14dp"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="16dp" />
+                    android:textSize="15sp" />
 
                 
                                     <TextView
@@ -64,12 +64,12 @@
                     android:id="@+id/versionField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/input_bg"
-                    android:hint="e.g., 1.0.0"
+                    android:hint="1.0.0"
                     android:inputType="text"
                     android:padding="14dp"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="16dp" />
+                    android:textSize="15sp" />
 
                                 <TextView
                     android:layout_width="wrap_content"
@@ -128,13 +128,13 @@
                     android:id="@+id/shortDescriptionField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/input_bg"
-                    android:hint="Brief one-liner about your app (80 characters max)"
+                    android:hint="In one line"
                     android:inputType="textCapSentences"
                     android:maxLength="80"
                     android:padding="14dp"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="16dp" />
+                    android:textSize="15sp" />
 
                                 <TextView
                     android:layout_width="wrap_content"
@@ -149,13 +149,13 @@
                     android:id="@+id/fullDescriptionField"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/input_bg"
                     android:gravity="top|start"
-                    android:hint="Detailed description of your app, features, and benefits"
+                    android:hint="Detailed description of your app"
                     android:inputType="textMultiLine|textCapSentences"
                     android:padding="14dp"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="8dp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -208,22 +208,22 @@
                                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="App Icon URL"
+                    android:text="App Size (MB) *"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:layout_marginBottom="8dp" />
 
                 <EditText
-                    android:id="@+id/iconUrlField"
+                    android:id="@+id/appSizeField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/input_bg"
-                    android:hint="https://example.com/icon.png"
-                    android:inputType="textUri"
+                    android:hint="25.5"
+                    android:inputType="numberDecimal"
                     android:padding="14dp"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="8dp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
