@@ -36,11 +36,6 @@ public class DeveloperProfile extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-        if (currentUser == null) {
-            navigateToLogin();
-            return;
-        }
-
         userId = currentUser.getUid();
         developersReference = FirebaseDatabase.getInstance().getReference("developers").child(userId);
 
@@ -112,15 +107,6 @@ public class DeveloperProfile extends AppCompatActivity {
     }
 
     private void logout() {
-        firebaseAuth.signOut();
-        navigateToLogin();
-        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-    }
-
-    private void navigateToLogin() {
-        Intent intent = new Intent(DeveloperProfile.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+        getOnBackPressedDispatcher().onBackPressed();
     }
 }

@@ -30,7 +30,7 @@ public class DeveloperViewApps extends AppCompatActivity {
     private LinearLayout emptyStateLayout;
     private Button addFirstAppButton;
     private AppAdapter appAdapter;
-    private DatabaseReference appsReference;
+    private DatabaseReference appsReference, developerAppListReference;
     private FirebaseAuth firebaseAuth;
     private List<ListApp> developerAppsList;
 
@@ -48,6 +48,7 @@ public class DeveloperViewApps extends AppCompatActivity {
         }
 
         appsReference = FirebaseDatabase.getInstance().getReference("apps");
+        developerAppListReference = FirebaseDatabase.getInstance().getReference("developerAppList");
 
         initViews();
         setupClickListeners();
@@ -85,27 +86,23 @@ public class DeveloperViewApps extends AppCompatActivity {
 
         String userId = currentUser.getUid();
 
-        appsReference.addValueEventListener(new ValueEventListener() {
+        // Load app IDs from developerAppList
+        developerAppListReference.child(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 developerAppsList.clear();
                 
-                if (snapshot.exists()) {
-                    for (DataSnapshot appSnapshot : snapshot.getChildren()) {
-                        ListApp app = appSnapshot.getValue(ListApp.class);
-                        if (app != null) {
-                            developerAppsList.add(app);
-                        }
+                if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
+                    // Iterate through app IDs
+                    for (DataSnapshot appIdSnapshot : snapshot.getChildren()) {
+                        String appId = appIdSnapshot.getKey();
+                        // Load app details from apps collection
+                        loadAppDetails(appId);
                     }
-                }
-
-                if (developerAppsList.isEmpty()) {
+                } else {
+                    // No apps found
                     appsRecyclerView.setVisibility(View.GONE);
                     emptyStateLayout.setVisibility(View.VISIBLE);
-                } else {
-                    appsRecyclerView.setVisibility(View.VISIBLE);
-                    emptyStateLayout.setVisibility(View.GONE);
-                    appAdapter.setAppList(developerAppsList);
                 }
             }
 
@@ -113,6 +110,37 @@ public class DeveloperViewApps extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(DeveloperViewApps.this, 
                     "Failed to load apps: " + error.getMessage(), 
+                    Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadAppDetails(String appId) {
+        appsReference.child(appId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    ListApp app = snapshot.getValue(ListApp.class);
+                    if (app != null && !developerAppsList.contains(app)) {
+                        developerAppsList.add(app);
+                        
+                        // Update UI
+                        if (developerAppsList.isEmpty()) {
+                            appsRecyclerView.setVisibility(View.GONE);
+                            emptyStateLayout.setVisibility(View.VISIBLE);
+                        } else {
+                            appsRecyclerView.setVisibility(View.VISIBLE);
+                            emptyStateLayout.setVisibility(View.GONE);
+                            appAdapter.setAppList(developerAppsList);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(DeveloperViewApps.this,
+                    "Error loading app details: " + error.getMessage(),
                     Toast.LENGTH_SHORT).show();
             }
         });

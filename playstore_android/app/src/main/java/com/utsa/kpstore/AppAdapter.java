@@ -73,18 +73,27 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
     static class AppViewHolder extends RecyclerView.ViewHolder {
         private TextView appName;
         private TextView appTitle;
+        private TextView appCategory;
         private ImageView appIcon;
 
         public AppViewHolder(@NonNull View itemView) {
             super(itemView);
             appName = itemView.findViewById(R.id.appName);
             appTitle = itemView.findViewById(R.id.appTitle);
+            appCategory = itemView.findViewById(R.id.appCategory);
             appIcon = itemView.findViewById(R.id.appIcon);
         }
 
         public void bind(ListApp app, OnAppClickListener listener) {
             appName.setText(app.getName());
             appTitle.setText(app.getTitle());
+            
+            if (app.getCategory() != null && !app.getCategory().isEmpty()) {
+                appCategory.setText(app.getCategory());
+                appCategory.setVisibility(View.VISIBLE);
+            } else {
+                appCategory.setVisibility(View.GONE);
+            }
 
             
             itemView.setOnClickListener(v -> {

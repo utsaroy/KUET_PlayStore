@@ -2,80 +2,54 @@ package com.utsa.kpstore;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.utsa.kpstore.models.ListApp;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.utsa.kpstore.HomeFragments.DownloadFragment;
+import com.utsa.kpstore.HomeFragments.FavouritesFragment;
+import com.utsa.kpstore.HomeFragments.HomeFragment;
+import com.utsa.kpstore.HomeFragments.SearchFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private AppAdapter appAdapter;
     private BottomNavigationView bottomNavigation;
-    private DatabaseReference databaseReference;
-    private List<ListApp> appList;
+    private ImageView profileIcon;
+    private Fragment currentFragment;
+    private int selectedItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        recyclerView = findViewById(R.id.recyclerView);
         bottomNavigation = findViewById(R.id.bottomNavigation);
+        profileIcon = findViewById(R.id.profileIcon);
 
-        appList = new ArrayList<>();
-        databaseReference = FirebaseDatabase.getInstance().getReference("apps");
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
-        appAdapter = new AppAdapter(appList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(appAdapter);
-        
-        appAdapter.setOnAppClickListener(app -> {
-            Intent intent = new Intent(HomeActivity.this, AppViewActivity.class);
-            intent.putExtra("app_id", app.getId());
-            intent.putExtra("app_name", app.getName());
-            intent.putExtra("app_title", app.getTitle());
+        profileIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
         });
 
-
         setupBottomNavigation();
-        databaseReference.addValueEventListener(new ValueEventListener() {
+
+        //default fragment
+        if (savedInstanceState == null) {
+            loadFragment(new HomeFragment());
+        }
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                appList.clear();
-                if (snapshot.exists()) {
-                    for (DataSnapshot appSnapshot : snapshot.getChildren()) {
-                        ListApp app = appSnapshot.getValue(ListApp.class);
-                        if (app != null) {
-                            appList.add(app);
-                        }
-                    }
+            public void handleOnBackPressed() {
+                if (selectedItem != R.id.nav_home) {
+                    bottomNavigation.setSelectedItemId(R.id.nav_home);
+                } else {
+                    finish();
                 }
-
-                appAdapter.setAppList(appList);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                appAdapter.setAppList(appList);
             }
         });
     }
@@ -83,35 +57,35 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupBottomNavigation() {
         bottomNavigation.setSelectedItemId(R.id.nav_home);
-        
+
         bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            
+            selectedItem = itemId;
+            Fragment selectedFragment = null;
+
             if (itemId == R.id.nav_home) {
-                // Show all apps
-                appAdapter.setAppList(appList);
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle("Home");
-                }
-                return true;
+                selectedFragment = new HomeFragment();
             } else if (itemId == R.id.nav_favourite) {
-                appAdapter.setAppList(appList);
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle("Favourites");
-                }
-                return true;
-            } else if (itemId == R.id.nav_profile) {
-                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-                return true;
+                selectedFragment = new FavouritesFragment();
+            } else if (itemId == R.id.search) {
+                selectedFragment = new SearchFragment();
+            } else if (itemId == R.id.downloads) {
+                selectedFragment = new DownloadFragment();
             }
-            
-            return false;
+
+            return loadFragment(selectedFragment);
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        bottomNavigation.setSelectedItemId(R.id.nav_home);
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            currentFragment = fragment;
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contentFrame, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 }

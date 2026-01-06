@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.utsa.kpstore.models.Developer;
@@ -64,34 +65,38 @@ public class DeveloperRequestAdapter extends RecyclerView.Adapter<DeveloperReque
             userEmailText.setText(developer.getEmail());
             bioText.setText("Bio: " + developer.getBio());
 
-            // Update status badge and buttons
             if (developer.isBanned()) {
                 statusBadge.setText("BANNED");
-                statusBadge.setBackgroundTintList(itemView.getContext()
-                        .getResources().getColorStateList(android.R.color.holo_red_dark));
+                statusBadge.setBackgroundTintList(
+                        ContextCompat.getColorStateList(itemView.getContext(), android.R.color.holo_orange_dark)
+                );
                 approveButton.setVisibility(View.GONE);
                 banButton.setText("Unban");
-                banButton.setBackgroundTintList(itemView.getContext()
-                        .getResources().getColorStateList(android.R.color.holo_green_dark));
-                actionButtons.setVisibility(View.VISIBLE);
+                banButton.setBackgroundTintList(
+                        ContextCompat.getColorStateList(itemView.getContext(), R.color.redyellow)
+                );
             } else if (developer.isApproved()) {
                 statusBadge.setText("APPROVED");
-                statusBadge.setBackgroundTintList(itemView.getContext()
-                        .getResources().getColorStateList(android.R.color.holo_green_dark));
+                statusBadge.setBackgroundTintList(
+                        ContextCompat.getColorStateList(itemView.getContext(), R.color.green)
+                );
                 approveButton.setVisibility(View.GONE);
                 banButton.setText("Ban");
-                banButton.setBackgroundTintList(itemView.getContext()
-                        .getResources().getColorStateList(android.R.color.holo_red_dark));
+                banButton.setBackgroundTintList(
+                        ContextCompat.getColorStateList(itemView.getContext(), R.color.redyellow)
+                );
                 actionButtons.setVisibility(View.VISIBLE);
             } else {
                 statusBadge.setText("PENDING");
-                statusBadge.setBackgroundTintList(itemView.getContext()
-                        .getResources().getColorStateList(android.R.color.holo_orange_dark));
+                statusBadge.setBackgroundTintList(
+                        ContextCompat.getColorStateList(itemView.getContext(), R.color.yellow)
+                );
                 approveButton.setVisibility(View.VISIBLE);
                 approveButton.setText("Approve");
                 banButton.setText("Reject");
-                banButton.setBackgroundTintList(itemView.getContext()
-                        .getResources().getColorStateList(android.R.color.holo_red_dark));
+                banButton.setBackgroundTintList(
+                        ContextCompat.getColorStateList(itemView.getContext(), R.color.redyellow)
+                );
                 actionButtons.setVisibility(View.VISIBLE);
             }
 

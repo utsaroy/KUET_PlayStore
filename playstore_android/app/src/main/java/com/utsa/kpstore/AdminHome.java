@@ -47,12 +47,6 @@ public class AdminHome extends AppCompatActivity {
     }
 
     private void initViews() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Admin Dashboard");
-        }
-
         requestsRecyclerView = findViewById(R.id.requestsRecyclerView);
         emptyStateText = findViewById(R.id.emptyStateText);
         loadingProgress = findViewById(R.id.loadingProgress);
@@ -117,7 +111,7 @@ public class AdminHome extends AppCompatActivity {
         developersReference.child(developer.getDeveloperId()).child("approved").setValue(true)
                 .addOnSuccessListener(aVoid -> {
                     // Update user to developer
-                    usersRef.child(developer.getDeveloperId()).child("isDeveloper").setValue(true);
+                    usersRef.child(developer.getDeveloperId()).child("developer").setValue(true);
                     usersRef.child(developer.getDeveloperId()).child("developerRequestStatus").setValue("approved");
                     
                     Toast.makeText(this, "Developer approved successfully!", Toast.LENGTH_SHORT).show();
@@ -137,7 +131,7 @@ public class AdminHome extends AppCompatActivity {
                     developersReference.child(developer.getDeveloperId()).child("approved").setValue(false);
                     
                     // Update user status
-                    usersRef.child(developer.getDeveloperId()).child("isDeveloper").setValue(false);
+                    usersRef.child(developer.getDeveloperId()).child("developer").setValue(false);
                     usersRef.child(developer.getDeveloperId()).child("developerRequestStatus").setValue("rejected");
                     
                     Toast.makeText(this, "Developer banned", Toast.LENGTH_SHORT).show();
@@ -159,13 +153,6 @@ public class AdminHome extends AppCompatActivity {
     }
 
     private void logout() {
-        // Clear admin session from SharedPreferences
-        SharedPreferences preferences = getSharedPreferences("AdminSession", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.apply();
-        
-        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(AdminHome.this, AdminLogin.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

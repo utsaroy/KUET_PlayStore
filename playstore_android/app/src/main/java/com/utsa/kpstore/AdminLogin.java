@@ -43,12 +43,6 @@ public class AdminLogin extends AppCompatActivity {
         // Initialize Firebase Database reference
         adminDatabaseReference = FirebaseDatabase.getInstance().getReference("admin");
 
-        // Check if admin is already logged in
-        if (isAdminLoggedIn()) {
-            navigateToAdminDashboard();
-            return;
-        }
-
         initViews();
         setupClickListeners();
     }
@@ -104,7 +98,6 @@ public class AdminLogin extends AppCompatActivity {
                     
                     if (storedPassword != null && storedPassword.equals(password)) {
                         // Login successful
-                        saveAdminSession(username);
                         Toast.makeText(AdminLogin.this, "Welcome Admin: " + username, Toast.LENGTH_SHORT).show();
                         navigateToAdminDashboard();
                     } else {
@@ -131,21 +124,6 @@ public class AdminLogin extends AppCompatActivity {
         return username.matches("^[a-zA-Z0-9_]+$");
     }
 
-    private void saveAdminSession(String username) {
-        // Save admin login session in SharedPreferences
-        SharedPreferences preferences = getSharedPreferences("AdminSession", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean("isAdminLoggedIn", true);
-        editor.putString("adminUsername", username);
-        editor.putLong("loginTime", System.currentTimeMillis());
-        editor.apply();
-    }
-
-    private boolean isAdminLoggedIn() {
-        SharedPreferences preferences = getSharedPreferences("AdminSession", MODE_PRIVATE);
-        return preferences.getBoolean("isAdminLoggedIn", false);
-    }
-
     private void navigateToAdminDashboard() {
         Intent intent = new Intent(AdminLogin.this, AdminHome.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -160,13 +138,5 @@ public class AdminLogin extends AppCompatActivity {
 
     private void hideError() {
         errorText.setVisibility(View.GONE);
-    }
-
-    public static void logoutAdmin(AdminLogin activity) {
-        // Logout admin by clearing SharedPreferences
-        SharedPreferences preferences = activity.getSharedPreferences("AdminSession", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.clear();
-        editor.apply();
     }
 }
