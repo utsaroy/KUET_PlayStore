@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox spacing="30" style="-fx-padding: 40;" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utsa.kpstore.playstore_desktop.controllers.CategoriesViewController">
+    
+    <VBox spacing="15">
+        <Text fill="#212121" style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Categories">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Text>
+        <Text fill="#757575" style="-fx-font-size: 14px;" text="Browse apps by category" />
+    </VBox>
+    
+    <GridPane hgap="20" vgap="20">
+        <VBox fx:id="category1" alignment="CENTER" onMouseClicked="#handleCategoryClick" spacing="15" style="-fx-background-color: linear-gradient(to bottom right, #667eea, #764ba2); -fx-background-radius: 15; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Text fill="WHITE" style="-fx-font-size: 48px;" text="📚" />
+            <Text fill="WHITE" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Educational">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Text>
+            <Text fill="rgba(255, 255, 255, 0.9)" style="-fx-font-size: 14px;" text="45 apps" />
+        </VBox>
+        
+        <VBox fx:id="category2" alignment="CENTER" onMouseClicked="#handleCategoryClick" spacing="15" style="-fx-background-color: linear-gradient(to bottom right, #f093fb, #f5576c); -fx-background-radius: 15; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Text fill="WHITE" style="-fx-font-size: 48px;" text="✏️" />
+            <Text fill="WHITE" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Productivity">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Text>
+            <Text fill="rgba(255, 255, 255, 0.9)" style="-fx-font-size: 14px;" text="32 apps" />
+        </VBox>
+        
+        <VBox fx:id="category3" alignment="CENTER" onMouseClicked="#handleCategoryClick" spacing="15" style="-fx-background-color: linear-gradient(to bottom right, #4facfe, #00f2fe); -fx-background-radius: 15; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);" GridPane.columnIndex="2" GridPane.rowIndex="0">
+            <Text fill="WHITE" style="-fx-font-size: 48px;" text="🔧" />
+            <Text fill="WHITE" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Utilities">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Text>
+            <Text fill="rgba(255, 255, 255, 0.9)" style="-fx-font-size: 14px;" text="28 apps" />
+        </VBox>
+        
+        <VBox fx:id="category4" alignment="CENTER" onMouseClicked="#handleCategoryClick" spacing="15" style="-fx-background-color: linear-gradient(to bottom right, #43e97b, #38f9d7); -fx-background-radius: 15; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Text fill="WHITE" style="-fx-font-size: 48px;" text="🎮" />
+            <Text fill="WHITE" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Games">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Text>
+            <Text fill="rgba(255, 255, 255, 0.9)" style="-fx-font-size: 14px;" text="18 apps" />
+        </VBox>
+        
+        <VBox fx:id="category5" alignment="CENTER" onMouseClicked="#handleCategoryClick" spacing="15" style="-fx-background-color: linear-gradient(to bottom right, #fa709a, #fee140); -fx-background-radius: 15; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Text fill="WHITE" style="-fx-font-size: 48px;" text="🎨" />
+            <Text fill="WHITE" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Creative">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Text>
+            <Text fill="rgba(255, 255, 255, 0.9)" style="-fx-font-size: 14px;" text="15 apps" />
+        </VBox>
+        
+        <VBox fx:id="category6" alignment="CENTER" onMouseClicked="#handleCategoryClick" spacing="15" style="-fx-background-color: linear-gradient(to bottom right, #30cfd0, #330867); -fx-background-radius: 15; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Text fill="WHITE" style="-fx-font-size: 48px;" text="📱" />
+            <Text fill="WHITE" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Social">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Text>
+            <Text fill="rgba(255, 255, 255, 0.9)" style="-fx-font-size: 14px;" text="12 apps" />
+        </VBox>
+        
+        <VBox fx:id="category7" alignment="CENTER" onMouseClicked="#handleCategoryClick" spacing="15" style="-fx-background-color: linear-gradient(to bottom right, #a8edea, #fed6e3); -fx-background-radius: 15; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);" GridPane.columnIndex="0" GridPane.rowIndex="2">
+            <Text fill="#212121" style="-fx-font-size: 48px;" text="💼" />
+            <Text fill="#212121" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Business">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Text>
+            <Text fill="#757575" style="-fx-font-size: 14px;" text="9 apps" />
+        </VBox>
+        
+        <VBox fx:id="category8" alignment="CENTER" onMouseClicked="#handleCategoryClick" spacing="15" style="-fx-background-color: linear-gradient(to bottom right, #ffecd2, #fcb69f); -fx-background-radius: 15; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Text fill="#212121" style="-fx-font-size: 48px;" text="🎵" />
+            <Text fill="#212121" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Music">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Text>
+            <Text fill="#757575" style="-fx-font-size: 14px;" text="7 apps" />
+        </VBox>
+        
+        <VBox fx:id="category9" alignment="CENTER" onMouseClicked="#handleCategoryClick" spacing="15" style="-fx-background-color: linear-gradient(to bottom right, #ff9a9e, #fecfef); -fx-background-radius: 15; -fx-padding: 40; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Text fill="#212121" style="-fx-font-size: 48px;" text="🏥" />
+            <Text fill="#212121" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Health">
+                <font>
+                    <Font name="System Bold" size="20.0" />
+                </font>
+            </Text>
+            <Text fill="#757575" style="-fx-font-size: 14px;" text="5 apps" />
+        </VBox>
+    </GridPane>
+    
+</VBox>

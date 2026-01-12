@@ -2,20 +2,20 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane id="mainContainer" prefHeight="800.0" prefWidth="1400.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utsa.kpstore.playstore_desktop.controllers.MainLayoutController">
     <top>
-        <HBox id="topBar" alignment="CENTER_LEFT" spacing="20">
+        <HBox id="topBar" alignment="CENTER_LEFT">
             <HBox alignment="CENTER_LEFT" spacing="12" HBox.hgrow="ALWAYS">
                 <ImageView fitHeight="55.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                     <Image url="@images/logo.png" />
@@ -27,41 +27,42 @@
                 </Text>
             </HBox>
 
-            <TextField id="searchBox" prefHeight="40" prefWidth="400" promptText="🔍 Search apps..." />
+            <TextField fx:id="searchBox" id="searchBox" onAction="#handleSearch" prefHeight="40" prefWidth="400" promptText="🔍 Search apps..." />
 
             <HBox alignment="CENTER_RIGHT" spacing="15">
-                <Button style="-fx-background-color: transparent; -fx-font-size: 18px;" styleClass="nav-button" text="🔔" />
-                <Button style="-fx-background-color: transparent; -fx-font-size: 20px;" styleClass="nav-button" text="👤" />
+                <Button fx:id="profileBtn" onAction="#showProfile" style="-fx-background-color: transparent; -fx-font-size: 20px;" styleClass="nav-button" text="👤" />
             </HBox>
         </HBox>
     </top>
     <left>
         <VBox id="sidebar" prefHeight="775.0" prefWidth="199.0" spacing="5">
-            <VBox spacing="5" VBox.vgrow="ALWAYS">
+            <VBox spacing="5">
                 <padding>
                     <Insets bottom="10" top="20" />
                 </padding>
-
                 <Button fx:id="homeBtn" maxWidth="Infinity" onAction="#showHome" style="-fx-font-size: 15px;" styleClass="nav-button" text="🏠  Home" />
-
                 <Button fx:id="newReleasesBtn" maxWidth="Infinity" onAction="#showNewReleases" style="-fx-font-size: 15px;" styleClass="nav-button" text="🔥  New Releases" />
-
-                <Button fx:id="categoriesBtn" maxWidth="Infinity" onAction="#showCategories" style="-fx-font-size: 15px;" styleClass="nav-button" text="📑  Categories" />
-
-                <Button fx:id="featuredBtn" maxWidth="Infinity" onAction="#showFeatured" style="-fx-font-size: 15px;" styleClass="nav-button" text="⭐  Featured" />
             </VBox>
+            
+            <Separator style="-fx-padding: 10 0 5 0;" />
+            <Text fill="#757575" style="-fx-font-weight: bold; -fx-translate-x: 15;" text="CATEGORIES" />
+            
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent; -fx-padding: 0;" stylesheets="@styles/styles.css" vbarPolicy="AS_NEEDED" VBox.vgrow="ALWAYS">
+                <VBox fx:id="categoriesContainer" spacing="2" style="-fx-background-color: transparent;" />
+            </ScrollPane>
 
             <Separator />
-
-             <Button fx:id="myAppsBtn" maxWidth="Infinity" onAction="#showMyApps" style="-fx-font-size: 15px;" styleClass="nav-button" text="📥  My Apps" />
-         <Button fx:id="myAppsBtn1" maxWidth="Infinity" onAction="#showMyApps" style="-fx-font-size: 15px;" styleClass="nav-button" text=" ⚙ Settings" />
-         <Button fx:id="myAppsBtn11" maxWidth="Infinity" onAction="#showMyApps" style="-fx-font-size: 15px;" styleClass="nav-button" text=" ⚙ Logout" />
+            
+            <VBox spacing="5">
+                 <Button fx:id="developerDashboardBtn" maxWidth="Infinity" onAction="#showDeveloperDashboard" style="-fx-font-size: 15px;" styleClass="nav-button" text="My Apps" />
+                 <Button fx:id="myAppsBtn" maxWidth="Infinity" onAction="#showMyApps" style="-fx-font-size: 15px;" styleClass="nav-button" text="Downloads" />
+                 <Button fx:id="logoutBtn" maxWidth="Infinity" onAction="#handleLogout" style="-fx-font-size: 15px;" styleClass="nav-button" text="Logout" />
+            </VBox>
         </VBox>
     </left>
     <center>
-        <StackPane id="contentArea" fx:id="contentArea">
-            <!-- Dynamic content will be loaded here -->
-        </StackPane>
+        <ScrollPane id="contentArea" fx:id="contentArea" fitToWidth="true" style="-fx-background-color: transparent;">
+        </ScrollPane>
     </center>
     
 </BorderPane>

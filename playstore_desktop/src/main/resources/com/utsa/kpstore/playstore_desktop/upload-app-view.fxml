@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utsa.kpstore.playstore_desktop.controllers.UploadAppViewController">
+    <VBox spacing="30" style="-fx-padding: 40;">
+        
+        <VBox spacing="15">
+            <Text fill="#212121" style="-fx-font-size: 28px; -fx-font-weight: bold;" text="Upload New App">
+                <font>
+                    <Font name="System Bold" size="28.0" />
+                </font>
+            </Text>
+            <Text fill="#757575" style="-fx-font-size: 14px;" text="Share your application with the KUET community" />
+        </VBox>
+        
+        <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);">
+            <HBox alignment="CENTER_LEFT">
+                <Text fill="#212121" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Basic Information" />
+            </HBox>
+            
+            <Separator />
+            
+            <VBox spacing="20">
+                <VBox spacing="8">
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #212121;" text="App Name *" />
+                    <TextField fx:id="appNameField" promptText="Enter your app name" style="-fx-background-color: #F5F5F5; -fx-background-radius: 8; -fx-padding: 12; -fx-font-size: 14px;" />
+                </VBox>
+                
+                <VBox spacing="8">
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #212121;" text="Full Description *" />
+                    <TextArea fx:id="fullDescArea" prefHeight="150" promptText="Detailed description of your app, features, and usage instructions" style="-fx-background-color: #F5F5F5; -fx-background-radius: 8; -fx-padding: 12; -fx-font-size: 14px;" wrapText="true" />
+                </VBox>
+                
+                <HBox spacing="15">
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #212121;" text="Category *" />
+                        <ComboBox fx:id="categoryComboBox" maxWidth="Infinity" promptText="Select category" style="-fx-background-color: #F5F5F5; -fx-background-radius: 8; -fx-padding: 10 15; -fx-font-size: 14px;" />
+                    </VBox>
+                    
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #212121;" text="Version *" />
+                        <TextField fx:id="versionField" promptText="e.g., 1.0.0" style="-fx-background-color: #F5F5F5; -fx-background-radius: 8; -fx-padding: 12; -fx-font-size: 14px;" />
+                    </VBox>
+                </HBox>
+            </VBox>
+        </VBox>
+        
+        <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 15; -fx-padding: 30; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 2);">
+            <HBox alignment="CENTER_LEFT">
+                <Text fill="#212121" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="App Files" />
+            </HBox>
+            
+            <Separator />
+            
+            <VBox spacing="20">
+                <VBox spacing="10">
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #212121;" text="App Icon *" />
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <TextField fx:id="iconPathField" editable="false" promptText="Select icon file (PNG, 512x512)" style="-fx-background-color: #F5F5F5; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 13px;" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="browseIconBtn" onAction="#handleBrowseIcon" style="-fx-background-color: #6200EE; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;" text="Browse" />
+                    </HBox>
+                </VBox>
+                
+                <VBox spacing="10">
+                    <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #212121;" text="App Package *" />
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <TextField fx:id="packagePathField" editable="false" promptText="Select app package (ZIP, JAR, EXE)" style="-fx-background-color: #F5F5F5; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 13px;" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="browsePackageBtn" onAction="#handleBrowsePackage" style="-fx-background-color: #6200EE; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 8; -fx-padding: 10 20; -fx-cursor: hand;" text="Browse" />
+                    </HBox>
+                    <Text fill="#757575" style="-fx-font-size: 12px;" text="Maximum file size: 100 MB" />
+                </VBox>
+                
+
+            </VBox>
+        </VBox>
+        
+        <HBox alignment="CENTER_RIGHT" spacing="15" style="-fx-padding: 20 0;">
+            <Button fx:id="cancelBtn" onAction="#handleCancel" style="-fx-background-color: #E0E0E0; -fx-text-fill: #212121; -fx-font-size: 14px; -fx-background-radius: 8; -fx-padding: 12 30; -fx-cursor: hand;" text="Cancel" />
+            <Button fx:id="submitBtn" onAction="#handleSubmit" style="-fx-background-color: #6200EE; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 12 30; -fx-cursor: hand;" text="Submit for Review" />
+        </HBox>
+        
+    </VBox>
+</ScrollPane>

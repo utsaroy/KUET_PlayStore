@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="mainContainer" prefHeight="720.0" prefWidth="1080.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utsa.kpstore.playstore_desktop.controllers.AdminLayoutController">
+    <left>
+        <VBox prefWidth="250.0" spacing="0" style="-fx-background-color: #2c3e50;">
+
+            <VBox alignment="CENTER" spacing="10" style="-fx-padding: 30 20; -fx-background-color: #233140;">
+                <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/logo.png" />
+                    </image>
+                </ImageView>
+                <Text fill="WHITE" style="-fx-font-weight: bold; -fx-font-size: 18px;" text="KUET PlayStore">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Text>
+                <Label style="-fx-text-fill: #95a5a6; -fx-font-size: 12px; -fx-font-weight: bold;" text="ADMIN CONSOLE" />
+            </VBox>
+            
+
+            <VBox spacing="5" style="-fx-padding: 15 10;" VBox.vgrow="ALWAYS">
+                <Button fx:id="dashboardBtn" alignment="BASELINE_LEFT" graphicTextGap="15" maxWidth="Infinity" onAction="#showDashboard" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-padding: 12 15; -fx-cursor: hand;" text="📊  Dashboard" />
+                
+                <Button fx:id="usersBtn" alignment="BASELINE_LEFT" graphicTextGap="15" maxWidth="Infinity" onAction="#showUsers" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-padding: 12 15; -fx-cursor: hand;" text="👥  Manage Users" />
+                
+                <Button fx:id="appsBtn" alignment="BASELINE_LEFT" graphicTextGap="15" maxWidth="Infinity" onAction="#showApps" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-padding: 12 15; -fx-cursor: hand;" text="✅  Approve Apps" />
+                
+                <Button fx:id="adminsBtn" alignment="BASELINE_LEFT" graphicTextGap="15" maxWidth="Infinity" onAction="#showAdmins" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-font-size: 14px; -fx-padding: 12 15; -fx-cursor: hand;" text="🛡️  Manage Admins" />
+            </VBox>
+            
+
+            <VBox style="-fx-padding: 20;">
+                <Separator style="-fx-background-color: #34495e;" />
+                <Button fx:id="logoutBtn" alignment="CENTER" maxWidth="Infinity" onAction="#handleLogout" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 10;" text="Logout" />
+            </VBox>
+        </VBox>
+    </left>
+    
+    <center>
+        <ScrollPane fx:id="contentArea" fitToWidth="true" style="-fx-background-color: #f5f6fa;">
+            <content>
+
+            </content>
+        </ScrollPane>
+    </center>
+   <top>
+      <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1080.0" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 1); -fx-padding: 0 20;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="headerLabel" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Dashboard" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="adminNameLabel" style="-fx-text-fill: #7f8c8d;" text="Administrator" />
+         </children>
+      </HBox>
+   </top>
+</BorderPane>
