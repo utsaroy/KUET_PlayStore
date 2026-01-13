@@ -20,11 +20,17 @@ public class AppDetails {
     private double rating;
     private int totalRatings;
     private int totalDownloads;
+    private String iconUrl;
+    private String status; // "pending", "approved", "rejected"
+    private String adminReview; // Admin feedback when app needs changes
 
     public AppDetails() {
     }
 
-    public AppDetails(String appId, String appName, String version, String description, String shortDescription, String developerName, String developerEmail, String category, List<String> screenshotUrls, String apkUrl, long fileSize, String lastUpdated, String publishedDate, double rating, int totalRatings, int totalDownloads) {
+    public AppDetails(String appId, String appName, String version, String description, String shortDescription,
+            String developerName, String developerEmail, String category, List<String> screenshotUrls, String apkUrl,
+            long fileSize, String lastUpdated, String publishedDate, double rating, int totalRatings,
+            int totalDownloads) {
         this.appId = appId;
         this.appName = appName;
         this.version = version;
@@ -171,6 +177,29 @@ public class AppDetails {
         this.totalDownloads = totalDownloads;
     }
 
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getAdminReview() {
+        return adminReview;
+    }
+
+    public void setAdminReview(String adminReview) {
+        this.adminReview = adminReview;
+    }
 
     public String getFormattedFileSize() {
 

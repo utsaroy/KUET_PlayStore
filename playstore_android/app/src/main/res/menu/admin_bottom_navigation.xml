@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_apps"
+        android:icon="@drawable/icon_apps"
+        android:title="Apps" />
+    <item
+        android:id="@+id/nav_pending"
+        android:icon="@drawable/icon_accept"
+        android:title="Pending" />
+    <item
+        android:id="@+id/nav_users"
+        android:icon="@drawable/icon_users"
+        android:title="Users" />
+    <item
+        android:id="@+id/nav_admins"
+        android:icon="@drawable/icon_manage"
+        android:title="Admins" />
+</menu>

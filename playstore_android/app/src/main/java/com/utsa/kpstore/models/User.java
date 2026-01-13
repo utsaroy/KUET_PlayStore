@@ -4,10 +4,12 @@ public class User {
     String name, email;
     boolean developer;
     String developerRequestStatus; // "none", "pending", "approved", "rejected"
+    String userId; // Used for admin operations
 
-    public User(){
+    public User() {
 
     }
+
     public User(String name, String email, boolean developer, String developerRequestStatus) {
         this.name = name;
         this.email = email;
@@ -45,6 +47,14 @@ public class User {
 
     public void setDeveloperRequestStatus(String developerRequestStatus) {
         this.developerRequestStatus = developerRequestStatus;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Override

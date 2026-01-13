@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,8 +22,11 @@ import com.utsa.kpstore.models.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView nameText, emailText;
-    private Button developerButton;
+    private android.widget.TextView nameText, emailText;
+    private Button developerButton, logoutButton;
+    private LinearLayout developerSection;
+    private CardView addAppCard, viewAppsCard;
+
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private User currentUserData;
@@ -46,16 +47,40 @@ public class ProfileActivity extends AppCompatActivity {
         String userId = currentUser.getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userId);
 
+        initViews();
+        setupClickListeners();
+        loadUserData();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadUserData();
+    }
+
+    private void initViews() {
         nameText = findViewById(R.id.nameText);
         emailText = findViewById(R.id.emailText);
         developerButton = findViewById(R.id.developerButton);
-        Button logoutButton = findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(v -> userLogout());
+        logoutButton = findViewById(R.id.logoutButton);
+        developerSection = findViewById(R.id.developerSection);
+        addAppCard = findViewById(R.id.addAppCard);
+        viewAppsCard = findViewById(R.id.viewAppsCard);
+    }
 
+    private void setupClickListeners() {
+        logoutButton.setOnClickListener(v -> userLogout());
         developerButton.setOnClickListener(v -> handleDeveloperButtonClick());
 
-        loadUserData();
+        addAppCard.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, AddAppActivity.class);
+            startActivity(intent);
+        });
+
+        viewAppsCard.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, DeveloperViewApps.class);
+            startActivity(intent);
+        });
     }
 
     private void loadUserData() {
@@ -67,62 +92,63 @@ public class ProfileActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         User user = snapshot.getValue(User.class);
-                        System.out.println("______________________");
-                        System.out.println(user);
                         if (user != null) {
                             currentUserData = user;
                             nameText.setText(user.getName());
-                            updateDeveloperButton(user);
+                            updateUIForUserType(user);
                         } else {
                             nameText.setText("User");
                         }
                     } else {
-                            nameText.setText("User");
+                        nameText.setText("User");
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(ProfileActivity.this, "Failed to load profile", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-    private void updateDeveloperButton(User user) {
+    private void updateUIForUserType(User user) {
         if (user.isDeveloper()) {
-            developerButton.setText("Go to Developer Profile");
-            developerButton.setVisibility(View.VISIBLE);
+            // Show developer section, hide developer button
+            developerSection.setVisibility(View.VISIBLE);
+            developerButton.setVisibility(View.GONE);
         } else {
-            // Check request status
-            String requestStatus = user.getDeveloperRequestStatus();
-            if (requestStatus == null) requestStatus = "none";
-            
-            switch (requestStatus) {
-                case "pending":
-                    developerButton.setText("Request Pending");
-                    developerButton.setEnabled(false);
-                    developerButton.setVisibility(View.VISIBLE);
-                    break;
-                case "rejected":
-                    developerButton.setText("Request Again");
-                    developerButton.setVisibility(View.VISIBLE);
-                    break;
-                default:
-                    developerButton.setText("Be a Developer");
-                    developerButton.setVisibility(View.VISIBLE);
-                    break;
-            }
+            // Hide developer section, show developer button
+            developerSection.setVisibility(View.GONE);
+            updateDeveloperButton(user);
+        }
+    }
+
+    private void updateDeveloperButton(User user) {
+        String requestStatus = user.getDeveloperRequestStatus();
+        if (requestStatus == null)
+            requestStatus = "none";
+
+        switch (requestStatus) {
+            case "pending":
+                developerButton.setText("Request Pending");
+                developerButton.setEnabled(false);
+                developerButton.setVisibility(View.VISIBLE);
+                break;
+            case "rejected":
+                developerButton.setText("Request Again");
+                developerButton.setVisibility(View.VISIBLE);
+                break;
+            default:
+                developerButton.setText("Be a Developer");
+                developerButton.setVisibility(View.VISIBLE);
+                break;
         }
     }
 
     private void handleDeveloperButtonClick() {
-        if (currentUserData != null && currentUserData.isDeveloper()) {
-            Intent intent = new Intent(ProfileActivity.this, DeveloperProfile.class);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(ProfileActivity.this, BecomeAdmin.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(ProfileActivity.this, BecomeAdmin.class);
+        startActivity(intent);
     }
 
     private void userLogout() {

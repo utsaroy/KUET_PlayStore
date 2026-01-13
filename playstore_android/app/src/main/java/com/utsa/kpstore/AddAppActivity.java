@@ -1,15 +1,22 @@
 package com.utsa.kpstore;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +31,8 @@ import com.utsa.kpstore.models.AppDetails;
 import com.utsa.kpstore.models.ListApp;
 import com.utsa.kpstore.models.User;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -34,10 +43,25 @@ public class AddAppActivity extends AppCompatActivity {
     private EditText appNameField, versionField, shortDescriptionField, fullDescriptionField, apkUrlField, appSizeField;
     private Spinner categorySpinner;
     private TextView errorText;
-    private Button submitButton, cancelButton;
+    private Button submitButton, cancelButton, selectIconButton;
+    private ImageView iconPreview;
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference, usersReference, appsReference, developerAppListReference;
+
+    private Uri selectedIconUri = null;
+    private String iconBase64 = null;
+
+    private final ActivityResultLauncher<String> imagePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            uri -> {
+                if (uri != null) {
+                    selectedIconUri = uri;
+                    iconPreview.setImageURI(uri);
+                    // Convert to Base64 immediately
+                    iconBase64 = convertImageToBase64(uri);
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +90,8 @@ public class AddAppActivity extends AppCompatActivity {
         errorText = findViewById(R.id.errorText);
         submitButton = findViewById(R.id.submitButton);
         cancelButton = findViewById(R.id.cancelButton);
+        iconPreview = findViewById(R.id.iconPreview);
+        selectIconButton = findViewById(R.id.selectIconButton);
     }
 
     private void setupCategorySpinner() {
@@ -80,12 +106,11 @@ public class AddAppActivity extends AppCompatActivity {
                 "Utilities",
                 "Other"
         };
-        
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
-                categories
-        );
+                categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapter);
     }
@@ -93,6 +118,7 @@ public class AddAppActivity extends AppCompatActivity {
     private void setupClickListeners() {
         submitButton.setOnClickListener(v -> submitApp());
         cancelButton.setOnClickListener(v -> finish());
+        selectIconButton.setOnClickListener(v -> imagePickerLauncher.launch("image/*"));
     }
 
     private void submitApp() {
@@ -120,7 +146,7 @@ public class AddAppActivity extends AppCompatActivity {
         }
 
         String userId = currentUser.getUid();
-        
+
         // Get user details
         usersReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -128,7 +154,8 @@ public class AddAppActivity extends AppCompatActivity {
                 if (snapshot.exists()) {
                     User user = snapshot.getValue(User.class);
                     if (user != null) {
-                        publishApp(user, appName, version, shortDescription, fullDescription, apkUrl, appSize, category);
+                        publishApp(user, appName, version, shortDescription, fullDescription, apkUrl, appSize,
+                                category);
                     } else {
                         showError("Failed to retrieve user information");
                         submitButton.setEnabled(true);
@@ -146,13 +173,54 @@ public class AddAppActivity extends AppCompatActivity {
         });
     }
 
-    private void publishApp(User user, String appName, String version, String shortDescription, 
-                          String fullDescription, String apkUrl, String appSize, String category) {
+    private void publishApp(User user, String appName, String version, String shortDescription,
+            String fullDescription, String apkUrl, String appSize, String category) {
         String appId = UUID.randomUUID().toString();
         String currentDate = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
-
         long fileSizeInBytes = (long) Double.parseDouble(appSize);
-        
+
+        // Use iconBase64 directly (already converted when image was selected)
+        saveAppToDatabase(user, appId, appName, version, shortDescription,
+                fullDescription, apkUrl, category, currentDate, fileSizeInBytes);
+    }
+
+    private String convertImageToBase64(Uri imageUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            if (inputStream != null)
+                inputStream.close();
+
+            // Resize to reduce size (max 200x200 for icons)
+            int maxSize = 200;
+            int width = bitmap.getWidth();
+            int height = bitmap.getHeight();
+            float scale = Math.min((float) maxSize / width, (float) maxSize / height);
+            if (scale < 1) {
+                width = Math.round(width * scale);
+                height = Math.round(height * scale);
+                bitmap = Bitmap.createScaledBitmap(bitmap, width, height, true);
+            }
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+            byte[] imageBytes = baos.toByteArray();
+            return Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void resetSubmitButton() {
+        submitButton.setEnabled(true);
+        submitButton.setText("Publish App");
+    }
+
+    private void saveAppToDatabase(User user, String appId, String appName, String version,
+            String shortDescription, String fullDescription, String apkUrl, String category,
+            String currentDate, long fileSizeInBytes) {
+
         AppDetails appDetails = new AppDetails();
         appDetails.setAppId(appId);
         appDetails.setAppName(appName);
@@ -169,38 +237,42 @@ public class AddAppActivity extends AppCompatActivity {
         appDetails.setTotalRatings(0);
         appDetails.setTotalDownloads(0);
         appDetails.setFileSize(fileSizeInBytes);
+        appDetails.setIconUrl(iconBase64);
+        appDetails.setStatus("pending");
 
         ListApp listApp = new ListApp(appName, shortDescription, appId, category);
-        appsReference.child(appId).setValue(listApp).addOnSuccessListener(v->{
+        listApp.setIconUrl(iconBase64);
+        listApp.setStatus("pending");
+
+        appsReference.child(appId).setValue(listApp).addOnSuccessListener(v -> {
             databaseReference.child(appId).setValue(appDetails)
                     .addOnSuccessListener(aVoid -> {
                         String developerId = firebaseAuth.getCurrentUser().getUid();
                         developerAppListReference.child(developerId).child(appId).setValue(true)
                                 .addOnSuccessListener(unused -> {
-                                    Toast.makeText(AddAppActivity.this, "App published successfully!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(AddAppActivity.this, "App published successfully!",
+                                            Toast.LENGTH_LONG).show();
                                     clearFields();
-                                    submitButton.setEnabled(true);
-                                    submitButton.setText("Publish App");
-
+                                    resetSubmitButton();
                                     finish();
                                 })
                                 .addOnFailureListener(e -> {
                                     showError("Failed to update developer app list: " + e.getMessage());
-                                    submitButton.setEnabled(true);
-                                    submitButton.setText("Publish App");
+                                    resetSubmitButton();
                                 });
                     })
                     .addOnFailureListener(e -> {
                         showError("Failed to publish app: " + e.getMessage());
-                        submitButton.setEnabled(true);
+                        resetSubmitButton();
+                        ;
                         submitButton.setText("Publish App");
                     });
         });
 
     }
 
-    private boolean validateInputs(String appName, String version, String shortDescription, 
-                                  String fullDescription, String apkUrl, String appSize, String category) {
+    private boolean validateInputs(String appName, String version, String shortDescription,
+            String fullDescription, String apkUrl, String appSize, String category) {
         if (appName.isEmpty()) {
             showError("App name is required");
             return false;

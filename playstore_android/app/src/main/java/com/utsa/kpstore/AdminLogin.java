@@ -40,7 +40,7 @@ public class AdminLogin extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize Firebase Database reference
+        // Firebase Reference
         adminDatabaseReference = FirebaseDatabase.getInstance().getReference("admin");
 
         initViews();
@@ -75,7 +75,7 @@ public class AdminLogin extends AppCompatActivity {
             return;
         }
 
-        // Validate username format (no special characters for database path)
+        // Validate username format
         if (!isValidUsername(username)) {
             showError("Invalid username format");
             return;
@@ -85,7 +85,7 @@ public class AdminLogin extends AppCompatActivity {
         loginButton.setEnabled(false);
         loginButton.setText("Logging in...");
 
-        // Query the admin database
+        // Check credentials
         adminDatabaseReference.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,13 +93,13 @@ public class AdminLogin extends AppCompatActivity {
                 loginButton.setText("Login");
 
                 if (snapshot.exists()) {
-                    // Admin username exists, check password
+                    // Validate password
                     String storedPassword = snapshot.child("password").getValue(String.class);
-                    
+
                     if (storedPassword != null && storedPassword.equals(password)) {
                         // Login successful
                         Toast.makeText(AdminLogin.this, "Welcome Admin: " + username, Toast.LENGTH_SHORT).show();
-                        navigateToAdminDashboard();
+                        navigateToAdminDashboard(username);
                     } else {
                         // Password incorrect
                         showError("Incorrect password");
@@ -120,11 +120,14 @@ public class AdminLogin extends AppCompatActivity {
     }
 
     private boolean isValidUsername(String username) {
-        // Check if username contains only alphanumeric characters and underscores
         return username.matches("^[a-zA-Z0-9_]+$");
     }
 
-    private void navigateToAdminDashboard() {
+    private void navigateToAdminDashboard(String username) {
+        // Save session
+        SharedPreferences prefs = getSharedPreferences("AdminPrefs", MODE_PRIVATE);
+        prefs.edit().putString("admin_username", username).apply();
+
         Intent intent = new Intent(AdminLogin.this, AdminHome.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

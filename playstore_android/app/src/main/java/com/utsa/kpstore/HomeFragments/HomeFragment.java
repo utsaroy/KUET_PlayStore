@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -93,7 +93,10 @@ public class HomeFragment extends Fragment {
                     for (DataSnapshot appSnapshot : snapshot.getChildren()) {
                         ListApp app = appSnapshot.getValue(ListApp.class);
                         if (app != null) {
-                            appList.add(app);
+                            // Only show approved apps
+                            if ("approved".equals(app.getStatus())) {
+                                appList.add(app);
+                            }
                         }
                     }
                 }

@@ -41,6 +41,11 @@ public class SearchFragment extends Fragment {
     private List<ListApp> allAppsList;
     private List<ListApp> filteredAppsList;
 
+    private RecyclerView categoryRecyclerView;
+    private com.utsa.kpstore.CategoryAdapter categoryAdapter;
+    private List<String> categoryList;
+    private String selectedCategory = "All";
+
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -51,7 +56,7 @@ public class SearchFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
@@ -63,12 +68,24 @@ public class SearchFragment extends Fragment {
         searchEditText = view.findViewById(R.id.searchEditText);
         searchRecyclerView = view.findViewById(R.id.searchRecyclerView);
         searchProgressBar = view.findViewById(R.id.searchProgressBar);
+        categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView);
 
         allAppsList = new ArrayList<>();
         filteredAppsList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("apps");
 
-        // RecyclerView
+        // Category RecyclerView
+        categoryList = new ArrayList<>();
+        setupCategories();
+        categoryAdapter = new com.utsa.kpstore.CategoryAdapter(categoryList, category -> {
+            selectedCategory = category;
+            filterApps(searchEditText.getText().toString());
+        });
+        categoryRecyclerView
+                .setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        categoryRecyclerView.setAdapter(categoryAdapter);
+
+        // App RecyclerView
         appAdapter = new AppAdapter(filteredAppsList);
         searchRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         searchRecyclerView.setAdapter(appAdapter);
@@ -84,6 +101,16 @@ public class SearchFragment extends Fragment {
         setupSearchListener();
 
         loadAppsFromFirebase();
+    }
+
+    private void setupCategories() {
+        categoryList.add("All");
+        categoryList.add("Games");
+        categoryList.add("Education");
+        categoryList.add("Tools");
+        categoryList.add("Social");
+        categoryList.add("Entertainment");
+        categoryList.add("Productivity");
     }
 
     private void setupSearchListener() {
@@ -105,15 +132,16 @@ public class SearchFragment extends Fragment {
 
     private void filterApps(String searchQuery) {
         filteredAppsList.clear();
+        String lowerCaseQuery = searchQuery.toLowerCase();
 
-        if (searchQuery.isEmpty()) {
-            filteredAppsList.addAll(allAppsList);
-        } else {
-            String lowerCaseQuery = searchQuery.toLowerCase();
-            for (ListApp app : allAppsList) {
-                if (app.getName() != null && app.getName().toLowerCase().contains(lowerCaseQuery)) {
-                    filteredAppsList.add(app);
-                }
+        for (ListApp app : allAppsList) {
+            boolean matchesSearch = searchQuery.isEmpty() ||
+                    (app.getName() != null && app.getName().toLowerCase().contains(lowerCaseQuery));
+            boolean matchesCategory = selectedCategory.equals("All") ||
+                    (app.getCategory() != null && app.getCategory().equalsIgnoreCase(selectedCategory));
+
+            if (matchesSearch && matchesCategory) {
+                filteredAppsList.add(app);
             }
         }
 
@@ -133,7 +161,9 @@ public class SearchFragment extends Fragment {
                     for (DataSnapshot appSnapshot : snapshot.getChildren()) {
                         ListApp app = appSnapshot.getValue(ListApp.class);
                         if (app != null) {
-                            allAppsList.add(app);
+                            if ("approved".equals(app.getStatus())) {
+                                allAppsList.add(app);
+                            }
                         }
                     }
                 }

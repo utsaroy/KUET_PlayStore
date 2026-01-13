@@ -10,33 +10,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="5dp">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical"
-            android:padding="20dp"
-            android:gravity="center">
+            android:padding="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:text="Be a Developer"
-                android:textSize="24sp"
-                android:textStyle="bold"
                 android:textColor="@color/black"
-                android:layout_marginTop="12dp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit your details for approval"
-                android:textSize="14sp"
-                android:textColor="#757575"
+                android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:layout_marginTop="4dp" />
+                android:text="Submit your details for approval"
+                android:textColor="#757575"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -44,10 +44,12 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/white">
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,96 +57,96 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                                <TextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Full Name"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:layout_marginBottom="8dp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/nameField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/input_bg"
                     android:hint="Your name"
                     android:inputType="textPersonName"
                     android:padding="14dp"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="16dp" />
+                    android:textSize="15sp" />
 
-                                <TextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="Email Address"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:layout_marginBottom="8dp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/emailField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:background="@drawable/input_bg"
                     android:hint="developer@example.com"
                     android:inputType="textEmailAddress"
                     android:padding="14dp"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="16dp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
                     android:text="About You"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:layout_marginBottom="8dp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/bioField"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/input_bg"
                     android:gravity="top|start"
                     android:hint="Short description about you"
                     android:inputType="textMultiLine|textCapSentences"
                     android:padding="14dp"
-                    android:textSize="15sp"
-                    android:layout_marginBottom="8dp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
-                <TextView
+        <TextView
             android:id="@+id/errorText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="#FFEBEE"
+            android:gravity="center"
+            android:padding="12dp"
             android:text="Error message"
             android:textColor="#D32F2F"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:visibility="gone"
-            android:padding="12dp"
-            android:background="#FFEBEE"
-            android:layout_marginBottom="16dp" />
+            android:visibility="gone" />
 
-                <Button
+        <Button
             android:id="@+id/submitButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit Request"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
+            android:layout_marginBottom="24dp"
             android:backgroundTint="#4CAF50"
             android:padding="16dp"
-            android:layout_marginBottom="24dp" />
+            android:text="Submit Request"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

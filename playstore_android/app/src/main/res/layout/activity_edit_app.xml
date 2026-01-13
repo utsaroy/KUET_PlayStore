@@ -7,35 +7,29 @@
     android:background="#F5F5F5"
     android:fillViewport="true"
     android:layout_marginTop="20dp"
-    tools:context=".AddAppActivity">
+    tools:context=".EditAppActivity">
 
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="16dp">
 
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/loadingProgress"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="Fill The Informations for you app" />
+            android:layout_gravity="center"
+            android:visibility="gone" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="2dp">
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,11 +40,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="App Name *"
-                    android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
 
                 <EditText
                     android:id="@+id/appNameField"
@@ -62,15 +56,14 @@
                     android:padding="14dp"
                     android:textSize="15sp" />
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="Version *"
-                    android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
 
                 <EditText
                     android:id="@+id/versionField"
@@ -86,54 +79,54 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="Category *"
-                    android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
 
                 <Spinner
                     android:id="@+id/categorySpinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:background="@drawable/input_bg"
-                    android:padding="14dp" />
+                    android:padding="14dp"
+                    android:layout_marginBottom="16dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="App Icon *"
-                    android:textColor="@color/black"
+                    android:text="App Icon"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_marginBottom="16dp">
 
                     <ImageView
                         android:id="@+id/iconPreview"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:background="@drawable/input_bg"
-                        android:padding="8dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/logo" />
+                        android:background="@drawable/input_bg"
+                        android:src="@drawable/logo"
+                        android:padding="8dp" />
 
                     <Button
                         android:id="@+id/selectIconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Change Icon"
+                        android:textSize="14sp"
                         android:layout_marginStart="16dp"
                         android:backgroundTint="#6A3DB6"
-                        android:text="Select Icon"
-                        android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
 
@@ -144,12 +137,10 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="2dp">
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,11 +160,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="Short Description *"
-                    android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
 
                 <EditText
                     android:id="@+id/shortDescriptionField"
@@ -190,11 +181,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="Full Description *"
-                    android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
 
                 <EditText
                     android:id="@+id/fullDescriptionField"
@@ -212,16 +203,13 @@
 
         </androidx.cardview.widget.CardView>
 
-
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_marginBottom="16dp"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="25dp"
-            app:cardElevation="2dp">
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -241,31 +229,31 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="APK Download URL *"
-                    android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
 
                 <EditText
                     android:id="@+id/apkUrlField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:background="@drawable/input_bg"
                     android:hint="https://example.com/myapp.apk"
                     android:inputType="textUri"
                     android:padding="14dp"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:layout_marginBottom="16dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="App Size (MB) *"
-                    android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_marginBottom="8dp" />
 
                 <EditText
                     android:id="@+id/appSizeField"
@@ -286,38 +274,38 @@
             android:id="@+id/errorText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="#FFEBEE"
-            android:gravity="center"
-            android:padding="12dp"
             android:text="Error message"
             android:textColor="#D32F2F"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:gravity="center"
+            android:visibility="gone"
+            android:padding="12dp"
+            android:background="#FFEBEE"
+            android:layout_marginBottom="16dp" />
 
         <Button
-            android:id="@+id/submitButton"
+            android:id="@+id/updateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:text="Update App"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
             android:backgroundTint="#4CAF50"
             android:padding="16dp"
-            android:text="Publish App"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:layout_marginBottom="12dp" />
 
         <Button
             android:id="@+id/cancelButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:text="Cancel"
+            android:textSize="16sp"
+            android:textColor="#757575"
             android:backgroundTint="#E0E0E0"
             android:padding="16dp"
-            android:text="Cancel"
-            android:textColor="#757575"
-            android:textSize="16sp" />
+            android:layout_marginBottom="24dp" />
 
     </LinearLayout>
 

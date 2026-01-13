@@ -70,12 +70,100 @@ public class DeveloperViewApps extends AppCompatActivity {
         addFirstAppButton.setOnClickListener(v -> navigateToAddApp());
 
         appAdapter.setOnAppClickListener(app -> {
-            Intent intent = new Intent(DeveloperViewApps.this, AppViewActivity.class);
+            Intent intent = new Intent(DeveloperViewApps.this, DeveloperAppStatusActivity.class);
             intent.putExtra("app_id", app.getId());
-            intent.putExtra("app_name", app.getName());
-            intent.putExtra("app_title", app.getTitle());
             startActivity(intent);
         });
+
+        appAdapter.setOnAppLongClickListener(app -> {
+            showAppOptionsDialog(app);
+        });
+    }
+
+    private void showAppOptionsDialog(ListApp app) {
+        java.util.List<String> optionsList = new java.util.ArrayList<>();
+        optionsList.add("Edit");
+        optionsList.add("Delete");
+
+        // If app is rejected, add option to view feedback
+        if ("rejected".equals(app.getStatus())) {
+            optionsList.add("View Admin Feedback");
+        }
+
+        String[] options = optionsList.toArray(new String[0]);
+
+        new android.app.AlertDialog.Builder(this)
+                .setTitle(app.getName() + (app.getStatus() != null ? " (" + app.getStatus().toUpperCase() + ")" : ""))
+                .setItems(options, (dialog, which) -> {
+                    String selected = options[which];
+                    if ("Edit".equals(selected)) {
+                        Intent intent = new Intent(DeveloperViewApps.this, EditAppActivity.class);
+                        intent.putExtra("app_id", app.getId());
+                        startActivity(intent);
+                    } else if ("Delete".equals(selected)) {
+                        confirmDeleteApp(app);
+                    } else if ("View Admin Feedback".equals(selected)) {
+                        showAdminFeedback(app);
+                    }
+                })
+                .show();
+    }
+
+    private void showAdminFeedback(ListApp app) {
+        DatabaseReference appDetailsRef = FirebaseDatabase.getInstance().getReference("appDetails").child(app.getId());
+        appDetailsRef.child("adminReview")
+                .addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
+                    @Override
+                    public void onDataChange(
+                            @androidx.annotation.NonNull com.google.firebase.database.DataSnapshot snapshot) {
+                        String review = snapshot.getValue(String.class);
+                        if (review != null && !review.isEmpty()) {
+                            new android.app.AlertDialog.Builder(DeveloperViewApps.this)
+                                    .setTitle("Admin Feedback")
+                                    .setMessage(review)
+                                    .setPositiveButton("Edit App", (dialog, which) -> {
+                                        Intent intent = new Intent(DeveloperViewApps.this, EditAppActivity.class);
+                                        intent.putExtra("app_id", app.getId());
+                                        startActivity(intent);
+                                    })
+                                    .setNegativeButton("Close", null)
+                                    .show();
+                        } else {
+                            Toast.makeText(DeveloperViewApps.this, "No feedback available", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(
+                            @androidx.annotation.NonNull com.google.firebase.database.DatabaseError error) {
+                        Toast.makeText(DeveloperViewApps.this, "Failed to load feedback", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void confirmDeleteApp(ListApp app) {
+        new android.app.AlertDialog.Builder(this)
+                .setTitle("Delete App")
+                .setMessage("Are you sure you want to delete \"" + app.getName() + "\"? This cannot be undone.")
+                .setPositiveButton("Delete", (dialog, which) -> deleteApp(app))
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
+    private void deleteApp(ListApp app) {
+        String appId = app.getId();
+        String userId = firebaseAuth.getCurrentUser().getUid();
+
+        DatabaseReference appDetailsRef = FirebaseDatabase.getInstance().getReference("appDetails").child(appId);
+        DatabaseReference reviewsRef = FirebaseDatabase.getInstance().getReference("reviews").child(appId);
+
+        // Delete from all locations
+        appsReference.child(appId).removeValue();
+        appDetailsRef.removeValue();
+        developerAppListReference.child(userId).child(appId).removeValue();
+        reviewsRef.removeValue();
+
+        Toast.makeText(this, "App deleted successfully", Toast.LENGTH_SHORT).show();
     }
 
     private void loadDeveloperApps() {
@@ -91,7 +179,7 @@ public class DeveloperViewApps extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 developerAppsList.clear();
-                
+
                 if (snapshot.exists() && snapshot.getChildrenCount() > 0) {
                     // Iterate through app IDs
                     for (DataSnapshot appIdSnapshot : snapshot.getChildren()) {
@@ -108,9 +196,9 @@ public class DeveloperViewApps extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(DeveloperViewApps.this, 
-                    "Failed to load apps: " + error.getMessage(), 
-                    Toast.LENGTH_SHORT).show();
+                Toast.makeText(DeveloperViewApps.this,
+                        "Failed to load apps: " + error.getMessage(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -123,7 +211,7 @@ public class DeveloperViewApps extends AppCompatActivity {
                     ListApp app = snapshot.getValue(ListApp.class);
                     if (app != null && !developerAppsList.contains(app)) {
                         developerAppsList.add(app);
-                        
+
                         // Update UI
                         if (developerAppsList.isEmpty()) {
                             appsRecyclerView.setVisibility(View.GONE);
@@ -140,8 +228,8 @@ public class DeveloperViewApps extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(DeveloperViewApps.this,
-                    "Error loading app details: " + error.getMessage(),
-                    Toast.LENGTH_SHORT).show();
+                        "Error loading app details: " + error.getMessage(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

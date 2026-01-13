@@ -5,69 +5,66 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5F5F5">
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:gravity="bottom"
-        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="35dp"
         android:paddingStart="10dp"
+        android:elevation="4dp"
+        android:paddingBottom="10dp">
 
-        android:orientation="vertical">
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/logo" />
+
         <TextView
             android:layout_width="wrap_content"
-            android:textSize="20sp"
             android:layout_height="wrap_content"
-            android:text="Admin Dashboard"/>
+            android:layout_weight="1"
+            android:fontFamily="@font/aclonica"
+            android:text="Admin Panel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3" />
+
+        <ImageView
+            android:id="@+id/logoutIcon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:padding="4dp"
+            app:srcCompat="@drawable/icon_logout"
+            app:tint="#D32F2F" />
+
     </LinearLayout>
 
-    <RelativeLayout
+
+    <FrameLayout
+        android:id="@+id/contentFrame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/requestsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:clipToPadding="false" />
 
-        <TextView
-            android:id="@+id/emptyStateText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="No developer requests yet"
-            android:textSize="16sp"
-            android:textColor="#757575"
-            android:visibility="gone" />
-
-        <ProgressBar
-            android:id="@+id/loadingProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="#D32F2F"
-        android:layout_gravity="center"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
-        android:text="Logout"
-        android:textColor="@color/white"
-        android:textSize="12sp" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        app:itemIconTint="#6A3DB6"
+        android:elevation="8dp"
+        app:itemTextColor="#6A3DB6"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/admin_bottom_navigation" />
 
 </LinearLayout>

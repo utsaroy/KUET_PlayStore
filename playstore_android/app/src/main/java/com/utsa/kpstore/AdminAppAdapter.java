@@ -5,80 +5,52 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.utsa.kpstore.models.ListApp;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
+public class AdminAppAdapter extends RecyclerView.Adapter<AdminAppAdapter.AppViewHolder> {
 
     private List<ListApp> appList;
-    private OnAppClickListener listener;
-    private boolean showStatusBadge = false; // Only show in developer views
-
-    public interface OnAppClickListener {
-        void onAppClick(ListApp app);
-    }
+    private OnAppLongClickListener longClickListener;
+    private OnAppClickListener clickListener;
 
     public interface OnAppLongClickListener {
         void onAppLongClick(ListApp app);
     }
 
-    public AppAdapter() {
-        this.appList = new ArrayList<>();
+    public interface OnAppClickListener {
+        void onAppClick(ListApp app);
     }
 
-    public AppAdapter(List<ListApp> appList) {
-        this.appList = appList != null ? appList : new ArrayList<>();
+    public AdminAppAdapter(List<ListApp> appList) {
+        this.appList = appList;
     }
-
-    public void setOnAppClickListener(OnAppClickListener listener) {
-        this.listener = listener;
-    }
-
-    private OnAppLongClickListener longClickListener;
 
     public void setOnAppLongClickListener(OnAppLongClickListener listener) {
         this.longClickListener = listener;
     }
 
-    public void setShowStatusBadge(boolean show) {
-        this.showStatusBadge = show;
-    }
-
-    public void setAppList(List<ListApp> appList) {
-        this.appList = appList != null ? appList : new ArrayList<>();
-        notifyDataSetChanged();
-    }
-
-    public void addApp(ListApp app) {
-        appList.add(app);
-        notifyItemInserted(appList.size() - 1);
-    }
-
-    public void clearApps() {
-        appList.clear();
-        notifyDataSetChanged();
+    public void setOnAppClickListener(OnAppClickListener listener) {
+        this.clickListener = listener;
     }
 
     @NonNull
     @Override
     public AppViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_app, parent, false);
+                .inflate(R.layout.item_admin_app, parent, false);
         return new AppViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AppViewHolder holder, int position) {
         ListApp app = appList.get(position);
-        holder.bind(app, listener, longClickListener);
+        holder.bind(app, clickListener, longClickListener);
     }
 
     @Override
@@ -87,38 +59,23 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
     }
 
     static class AppViewHolder extends RecyclerView.ViewHolder {
-        private TextView appName;
-        private TextView appTitle;
-        private TextView appCategory;
-        private TextView statusBadge;
+        private TextView appName, appCategory, appId;
         private ImageView appIcon;
 
         public AppViewHolder(@NonNull View itemView) {
             super(itemView);
             appName = itemView.findViewById(R.id.appName);
-            appTitle = itemView.findViewById(R.id.appTitle);
             appCategory = itemView.findViewById(R.id.appCategory);
+            appId = itemView.findViewById(R.id.appId);
             appIcon = itemView.findViewById(R.id.appIcon);
-            statusBadge = itemView.findViewById(R.id.statusBadge);
         }
 
-        public void bind(ListApp app, OnAppClickListener listener, OnAppLongClickListener longClickListener) {
+        public void bind(ListApp app, OnAppClickListener clickListener, OnAppLongClickListener longClickListener) {
             appName.setText(app.getName());
-            appTitle.setText(app.getTitle());
+            appCategory.setText(app.getCategory());
+            appId.setText("ID: " + app.getId().substring(0, Math.min(8, app.getId().length())) + "...");
 
-            if (app.getCategory() != null && !app.getCategory().isEmpty()) {
-                appCategory.setText(app.getCategory());
-                appCategory.setVisibility(View.VISIBLE);
-            } else {
-                appCategory.setVisibility(View.GONE);
-            }
-
-            // Always hide status badge in this adapter (user-facing views)
-            if (statusBadge != null) {
-                statusBadge.setVisibility(View.GONE);
-            }
-
-            // Load app icon
+            // Load icon
             if (app.getIconUrl() != null && !app.getIconUrl().isEmpty()) {
                 try {
                     byte[] decodedBytes = android.util.Base64.decode(app.getIconUrl(), android.util.Base64.DEFAULT);
@@ -133,8 +90,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
             }
 
             itemView.setOnClickListener(v -> {
-                if (listener != null) {
-                    listener.onAppClick(app);
+                if (clickListener != null) {
+                    clickListener.onAppClick(app);
                 }
             });
 

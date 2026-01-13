@@ -35,6 +35,12 @@ public class SignupActivity extends AppCompatActivity {
         loginText = findViewById(R.id.signupText);
         signupButton = findViewById(R.id.loginButton);
 
+        loginText.setOnClickListener(v->{
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         signupButton.setOnClickListener(v -> {
             errorText.setVisibility(INVISIBLE);
             String name = nameField.getText().toString().trim();

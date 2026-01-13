@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.utsa.kpstore.AdminFragments.AdminApproveFragment;
 import com.utsa.kpstore.models.Developer;
 
 import java.util.List;
@@ -18,11 +19,11 @@ import java.util.List;
 public class DeveloperRequestAdapter extends RecyclerView.Adapter<DeveloperRequestAdapter.RequestViewHolder> {
 
     private List<Developer> developersList;
-    private AdminHome activity;
+    private AdminApproveFragment fragment;
 
-    public DeveloperRequestAdapter(List<Developer> developersList, AdminHome activity) {
+    public DeveloperRequestAdapter(List<Developer> developersList, AdminApproveFragment fragment) {
         this.developersList = developersList;
-        this.activity = activity;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -68,35 +69,29 @@ public class DeveloperRequestAdapter extends RecyclerView.Adapter<DeveloperReque
             if (developer.isBanned()) {
                 statusBadge.setText("BANNED");
                 statusBadge.setBackgroundTintList(
-                        ContextCompat.getColorStateList(itemView.getContext(), android.R.color.holo_orange_dark)
-                );
+                        ContextCompat.getColorStateList(itemView.getContext(), android.R.color.holo_orange_dark));
                 approveButton.setVisibility(View.GONE);
                 banButton.setText("Unban");
                 banButton.setBackgroundTintList(
-                        ContextCompat.getColorStateList(itemView.getContext(), R.color.redyellow)
-                );
+                        ContextCompat.getColorStateList(itemView.getContext(), R.color.redyellow));
             } else if (developer.isApproved()) {
                 statusBadge.setText("APPROVED");
                 statusBadge.setBackgroundTintList(
-                        ContextCompat.getColorStateList(itemView.getContext(), R.color.green)
-                );
+                        ContextCompat.getColorStateList(itemView.getContext(), R.color.green));
                 approveButton.setVisibility(View.GONE);
                 banButton.setText("Ban");
                 banButton.setBackgroundTintList(
-                        ContextCompat.getColorStateList(itemView.getContext(), R.color.redyellow)
-                );
+                        ContextCompat.getColorStateList(itemView.getContext(), R.color.redyellow));
                 actionButtons.setVisibility(View.VISIBLE);
             } else {
                 statusBadge.setText("PENDING");
                 statusBadge.setBackgroundTintList(
-                        ContextCompat.getColorStateList(itemView.getContext(), R.color.yellow)
-                );
+                        ContextCompat.getColorStateList(itemView.getContext(), R.color.yellow));
                 approveButton.setVisibility(View.VISIBLE);
                 approveButton.setText("Approve");
                 banButton.setText("Reject");
                 banButton.setBackgroundTintList(
-                        ContextCompat.getColorStateList(itemView.getContext(), R.color.redyellow)
-                );
+                        ContextCompat.getColorStateList(itemView.getContext(), R.color.redyellow));
                 actionButtons.setVisibility(View.VISIBLE);
             }
 
@@ -105,7 +100,7 @@ public class DeveloperRequestAdapter extends RecyclerView.Adapter<DeveloperReque
                         .setTitle("Approve Developer")
                         .setMessage("Are you sure you want to approve " + developer.getName() + " as a developer?")
                         .setPositiveButton("Approve", (dialog, which) -> {
-                            activity.approveDeveloper(developer);
+                            fragment.approveDeveloper(developer);
                         })
                         .setNegativeButton("Cancel", null)
                         .show();
@@ -113,23 +108,21 @@ public class DeveloperRequestAdapter extends RecyclerView.Adapter<DeveloperReque
 
             banButton.setOnClickListener(v -> {
                 if (developer.isBanned()) {
-                    // Unban
                     new AlertDialog.Builder(itemView.getContext())
                             .setTitle("Unban Developer")
                             .setMessage("Are you sure you want to unban " + developer.getName() + "?")
                             .setPositiveButton("Unban", (dialog, which) -> {
-                                activity.unbanDeveloper(developer);
+                                fragment.unbanDeveloper(developer);
                             })
                             .setNegativeButton("Cancel", null)
                             .show();
                 } else {
-                    // Ban or Reject
                     new AlertDialog.Builder(itemView.getContext())
                             .setTitle(developer.isApproved() ? "Ban Developer" : "Reject Request")
-                            .setMessage("Are you sure you want to " + 
+                            .setMessage("Are you sure you want to " +
                                     (developer.isApproved() ? "ban " : "reject ") + developer.getName() + "?")
                             .setPositiveButton(developer.isApproved() ? "Ban" : "Reject", (dialog, which) -> {
-                                activity.banDeveloper(developer);
+                                fragment.banDeveloper(developer);
                             })
                             .setNegativeButton("Cancel", null)
                             .show();

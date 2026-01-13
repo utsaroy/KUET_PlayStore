@@ -3,8 +3,12 @@ package com.utsa.kpstore.models;
 public class ListApp {
     private String name, title, category;
     private String id;
+    private String iconUrl;
+    private String status; // "pending", "approved", "rejected"
 
-    public ListApp(){}
+    public ListApp() {
+    }
+
     public ListApp(String name, String title, String id, String category) {
         this.name = name;
         this.title = title;
@@ -42,5 +46,21 @@ public class ListApp {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
